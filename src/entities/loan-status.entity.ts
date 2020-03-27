@@ -9,24 +9,8 @@ export class LoanStatus {
 
     @Column({type: 'varchar', length: 25, nullable: false})
     name!: string;
-
-    @Column({type: Date, nullable: false})
-    creationDate?: Date;
  
     @OneToMany(type => Loan, loan => loan.loanStatus)
-    loans!: Array<Loan>;
-
-
-    // @Column({type: Boolean, nullable: false})
-    // requested?: boolean;
-
-    // @Column({type: Boolean, nullable: false})
-    // approved?: boolean;
-
-    // @Column({type: Boolean, nullable: false})
-    // returned?: boolean;
-
-    // @Column({type: Boolean, nullable: false})
-    // received?: boolean;
+    loans?: Array<Loan>;
 
 }
