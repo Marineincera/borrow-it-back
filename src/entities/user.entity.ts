@@ -22,16 +22,16 @@ export class User {
     password!: string;
 
     @Column({type: 'varchar', length: 255, nullable: false})
-    ville!: string;
+    city!: string;
 
     @Column({type: Date , nullable: false})
-    inscriptionDate!: string;
+    registrationDate!: string;
 
     @Column({type: Boolean, nullable: false})
-    livraison?: boolean;
+    walkingDelivery?: boolean;
 
     @Column({type: Boolean, nullable: false})
-    envoi?: boolean;
+    letterDelivery?: boolean;
 
     @OneToMany(type => Item, item => item.user)
     items?: Array<Item>;

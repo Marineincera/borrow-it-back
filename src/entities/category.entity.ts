@@ -14,5 +14,5 @@ export class Category {
     creationDate?: Date;
 
     @OneToMany(type => Item, item => item.category)
-    items!: Array<Item>;
+    items?: Array<Item>;
 }

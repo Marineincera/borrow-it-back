@@ -8,14 +8,14 @@ export class ItemStatus {
     id!: number;
 
     @Column({type: Boolean, nullable: false})
-    disponible?: boolean;
+    available?: boolean;
 
     @Column({type: Boolean, nullable: false})
-    indisponible?: boolean;
+    unavailable?: boolean;
 
     @Column({type: Boolean, nullable: false})
-    emprunte?: boolean;
+    borrowed?: boolean;
 
     @OneToMany(type => Item, item => item.itemStatus)
-    items!: Array<Item>;
+    items?: Array<Item>;
 }
