@@ -16,7 +16,7 @@ await createConnection({
     port: 3306,
     username: process.env.BORROW_DB_USER,
     password: process.env.BORROW_DB_PASS, 
-    database: process.env.BORROW_DB,
+    database: 'borrowit',
     entities: [
         Category,
         Item,
