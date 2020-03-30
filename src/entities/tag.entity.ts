@@ -15,5 +15,5 @@ export class Tag {
 
     @ManyToMany(type => Item)
     @JoinTable()
-    items!: Item[];
+    items?: Item[];
 }

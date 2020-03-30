@@ -8,7 +8,7 @@ export class Opinion {
     id!: number;
 
     @Column({type: Date, nullable: false})
-    updateDate!: Date;
+    updateDate?: Date;
 
     @ManyToOne(type => User, user => user.id)
     author!: User;

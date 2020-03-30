@@ -12,13 +12,13 @@ export class Item {
     id!: number;
 
     @Column({type: 'varchar', length: 25, nullable: false})
-    titre!: string;
+    title!: string;
 
     @Column({type: 'varchar', length: 25, nullable: false})
     image?: string;
 
     @Column({type: 'int', nullable: false})
-    note?: string;
+    note?: number;
 
     @ManyToOne(type => User, user => user.items)
     user!: User;
@@ -34,5 +34,5 @@ export class Item {
     itemStatus!: ItemStatus;
 
     @OneToMany(type => Loan, loan => loan.borrowedItem)
-    loans!: Array<Loan>;
+    loans?: Array<Loan>;
 }
