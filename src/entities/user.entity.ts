@@ -12,10 +12,10 @@ export class User {
     @Column({type: 'varchar', length: 225, nullable: true})
     avatar?: string;
 
-    @Column({type: 'varchar', length: 15, nullable: false})
+    @Column({type: 'varchar', length: 55, nullable: false})
     pseudo!: string;
 
-    @Column({type: 'varchar', length: 15, nullable: false})
+    @Column({type: 'varchar', length: 55, nullable: false})
     email!: string;
 
     @Column({type: 'varchar', length: 255, nullable: false})
@@ -27,10 +27,10 @@ export class User {
     @Column({type: Date , nullable: true})
     registrationDate?: Date;
 
-    @Column({type: Boolean, nullable: false})
+    @Column({type: 'bool', nullable: false})
     walkingDelivery?: boolean;
 
-    @Column({type: Boolean, nullable: false})
+    @Column({type: 'bool', nullable: false})
     letterDelivery?: boolean;
 
     @OneToMany(type => Item, item => item.user)
