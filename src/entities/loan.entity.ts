@@ -18,7 +18,7 @@ export class Loan {
     @ManyToOne(type => User, user => user.loans)
     owner!: User;
 
-    @Column({type: Date, nullable: false})
+    @Column({type: Date, nullable: true})
     borrowDate?: Date;
 
     @OneToMany(type => LoanStatus, loanStatus => loanStatus.loans)

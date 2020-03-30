@@ -10,7 +10,7 @@ export class Tag {
     @Column({type: 'varchar', length: 25, nullable: false})
     name!: string;
 
-    @Column({type: Date, nullable: false})
+    @Column({type: Date, nullable: true})
     creationDate?: Date;
 
     @ManyToMany(type => Item)

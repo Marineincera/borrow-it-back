@@ -7,7 +7,7 @@ export class Opinion {
     @PrimaryGeneratedColumn({ type: 'int'})
     id!: number;
 
-    @Column({type: Date, nullable: false})
+    @Column({type: Date, nullable: true})
     updateDate?: Date;
 
     @ManyToOne(type => User, user => user.id)

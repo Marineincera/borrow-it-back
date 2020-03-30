@@ -7,13 +7,13 @@ export class ItemStatus {
     @PrimaryGeneratedColumn({ type: 'int'})
     id!: number;
 
-    @Column({type: Boolean, nullable: false})
+    @Column({type: Boolean, nullable: true})
     available?: boolean;
 
-    @Column({type: Boolean, nullable: false})
+    @Column({type: Boolean, nullable: true})
     unavailable?: boolean;
 
-    @Column({type: Boolean, nullable: false})
+    @Column({type: Boolean, nullable: true})
     borrowed?: boolean;
 
     @OneToMany(type => Item, item => item.itemStatus)

@@ -9,7 +9,7 @@ export class User {
     @PrimaryGeneratedColumn({ type: 'int'})
     id!: number;
 
-    @Column({type: 'varchar', length: 25, nullable: false})
+    @Column({type: 'varchar', length: 225, nullable: true})
     avatar?: string;
 
     @Column({type: 'varchar', length: 15, nullable: false})
@@ -24,8 +24,8 @@ export class User {
     @Column({type: 'varchar', length: 255, nullable: false})
     city!: string;
 
-    @Column({type: Date , nullable: false})
-    registrationDate!: string;
+    @Column({type: Date , nullable: true})
+    registrationDate?: Date;
 
     @Column({type: Boolean, nullable: false})
     walkingDelivery?: boolean;

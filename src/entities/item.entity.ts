@@ -14,10 +14,10 @@ export class Item {
     @Column({type: 'varchar', length: 25, nullable: false})
     title!: string;
 
-    @Column({type: 'varchar', length: 25, nullable: false})
+    @Column({type: 'varchar', length: 25, nullable: true})
     image?: string;
 
-    @Column({type: 'int', nullable: false})
+    @Column({type: 'int', nullable: true})
     note?: number;
 
     @ManyToOne(type => User, user => user.items)
