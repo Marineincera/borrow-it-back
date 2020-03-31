@@ -4,6 +4,7 @@ import { Category } from './category.entity';
 import { Tag } from './tag.entity';
 import { ItemStatus } from './item-status.entity';
 import { Loan } from './loan.entity';
+import { Opinion } from './opinion.entity';
 
 @Entity('item')
 export class Item {
@@ -35,4 +36,7 @@ export class Item {
 
     @OneToMany(type => Loan, loan => loan.borrowedItem)
     loans?: Array<Loan>;
+
+    @OneToMany(type => Opinion, opinion => opinion.item)
+    opinions?: Array<Opinion>;
 }

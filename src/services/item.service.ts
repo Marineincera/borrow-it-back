@@ -15,4 +15,14 @@ export class ItemService extends AbstractService {
         super();
     }
 
+    relationEntities = ['user', 'category', 'tags', 'opinions', 'itemStatus', 'loans'];
+
+    getAll() {
+        return this.repository.find({ relations: this.relationEntities });
+    }
+
+    getById(id: number) {
+        return this.repository.findOne(id, { relations: this.relationEntities, where: { id } });
+    }
+
 }

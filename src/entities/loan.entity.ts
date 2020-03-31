@@ -21,6 +21,6 @@ export class Loan {
     @Column({type: Date, nullable: true})
     borrowDate?: Date;
 
-    @OneToMany(type => LoanStatus, loanStatus => loanStatus.loans)
+    @ManyToOne(type => LoanStatus, loanStatus => loanStatus.loans)
     loanStatus?: LoanStatus;
 }
