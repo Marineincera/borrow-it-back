@@ -15,7 +15,7 @@ export class UserService extends AbstractService {
         super();
     }
 
-    relationEntities = ['items', 'loans', 'items.category', 'items.tags', 'items.itemStatus', 'items.loans'];
+    relationEntities = ['items', 'loans', 'items.category', 'items.tags', 'items.user', 'items.loans', 'items.itemStatus', 'items.opinions'];
 
     getAll() {
         return this.repository.find({ relations: this.relationEntities });
