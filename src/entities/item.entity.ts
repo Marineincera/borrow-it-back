@@ -5,6 +5,7 @@ import { Tag } from './tag.entity';
 import { ItemStatus } from './item-status.entity';
 import { Loan } from './loan.entity';
 import { Opinion } from './opinion.entity';
+import { Console } from './console.entity';
 
 @Entity('item')
 export class Item {
@@ -18,6 +19,9 @@ export class Item {
     @Column({type: 'varchar', length: 255, nullable: true})
     image?: string;
 
+    @Column({type: 'varchar', length: 555, nullable: true})
+    description?: string;
+
     @Column({type: 'int', nullable: true})
     note?: number;
 
@@ -26,6 +30,9 @@ export class Item {
 
     @ManyToOne(type => Category, category => category.items)
     category!: Category;
+
+    @ManyToOne(type => Console, console => console.items)
+    console?: Console;
 
     @ManyToMany(type => Tag)
     @JoinTable()

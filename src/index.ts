@@ -5,6 +5,7 @@ import loaders from './loaders';
 
 import { UserController } from './controllers/user.controller';
 import { CategoryController } from './controllers/category.controller';
+import { ConsoleController } from './controllers/console.controller';
 import { ItemStatusController } from './controllers/item-status.controller';
 import { ItemController } from './controllers/item.controller';
 import { LoanStatusController } from './controllers/loan-status.controller';
@@ -21,6 +22,7 @@ async function startServer() {
 
     // Ajout des différentes route de votre application
     CategoryController(app),
+    ConsoleController(app),
     ItemStatusController(app),
     ItemController(app),
     LoanStatusController(app),

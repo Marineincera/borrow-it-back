@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 
 import { CategoryService } from '../services/category.service';
 import { commonController } from '../core/abstract.controller';
@@ -17,6 +17,13 @@ export const CategoryController = (app: Application) => {
     const categoryRouter = commonController(categoryService);
 
     // Ajoutez les nouvelles routes ici
+    categoryRouter.get('/', async (req: Request, res: Response) => {
+        res.send(await categoryService.getAll());
+    });
+
+    categoryRouter.get('/:id', async (req: Request, res: Response) => {
+        res.send(await categoryService.getById(Number(req.params.id)));
+    });
 
     app.use('/categories', categoryRouter);
 };

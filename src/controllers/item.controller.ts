@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 
 import { commonController } from '../core/abstract.controller';
 import { ItemService } from '../services/item.service';
@@ -17,6 +17,17 @@ export const ItemController = (app: Application) => {
     const itemRouter = commonController(itemService);
 
     // Ajoutez les nouvelles routes ici
+    itemRouter.get('/filter/:number', async (req: Request, res: Response) => {
+        res.send(await itemService.getFilterItems(Number(req.params.number)));
+    });
+
+    itemRouter.get('/', async (req: Request, res: Response) => {
+        res.send(await itemService.getAll());
+    });
+
+    itemRouter.get('/:id', async (req: Request, res: Response) => {
+        res.send(await itemService.getById(Number(req.params.id)));
+    });
 
     app.use('/items', itemRouter);
 };
