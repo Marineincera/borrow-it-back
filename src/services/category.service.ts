@@ -15,7 +15,7 @@ export class CategoryService extends AbstractService {
         super();
     }
 
-    relationEntities = ['items'];
+    relationEntities = ['items', 'items.user','items.itemStatus', 'items.console'];
 
     getAll() {
         return this.repository.find({ relations: this.relationEntities });
@@ -24,6 +24,8 @@ export class CategoryService extends AbstractService {
     getById(id: number) {
         return this.repository.findOne(id, { relations: this.relationEntities, where: { id } });
     }
+
+
 
 
 }
