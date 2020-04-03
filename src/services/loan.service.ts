@@ -15,4 +15,14 @@ export class LoanService extends AbstractService {
         super();
     }
 
+    relationEntities = ['borrower', 'owner', 'borrowedItem', 'loanStatus']
+
+    getAll() {
+        return this.repository.find({ relations: this.relationEntities });
+    }
+
+    getById(id: number) {
+        return this.repository.findOne(id, { relations: this.relationEntities, where: { id } });
+    }
+
 }

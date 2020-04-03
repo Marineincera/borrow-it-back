@@ -15,4 +15,14 @@ export class TagService extends AbstractService {
         super();
     }
 
+    relationEntities = ['items']
+
+    getAll() {
+        return this.repository.find({ relations: this.relationEntities });
+    }
+
+    getById(id: number) {
+        return this.repository.findOne(id, { relations: this.relationEntities, where: { id } });
+    }
+
 }
