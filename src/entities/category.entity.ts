@@ -7,12 +7,12 @@ export class Category {
     @PrimaryGeneratedColumn({ type: 'int'})
     id!: number;
 
-    @Column({type: 'varchar', length: 25, nullable: false})
+    @Column({type: 'varchar', length: 205, nullable: false})
     name!: string;
 
     @Column({type: Date, nullable: true})
     creationDate?: Date;
 
     @OneToMany(type => Item, item => item.category)
-    items?: Array<Item>;
+    items?: Item[];
 }

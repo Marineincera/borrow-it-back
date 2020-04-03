@@ -8,6 +8,7 @@ import { LoanStatus } from '../entities/loan-status.entity';
 import { Opinion } from '../entities/opinion.entity';
 import { Tag } from '../entities/tag.entity';
 import { User } from '../entities/user.entity';
+import { Console } from '../entities/console.entity';
 
 export default async () => {
 
@@ -19,6 +20,7 @@ await createConnection({
     database: 'borrowit',
     entities: [
         Category,
+        Console,
         Item,
         ItemStatus,
         Loan,

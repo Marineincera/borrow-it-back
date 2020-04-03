@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 
 import { commonController } from '../core/abstract.controller';
 import { UserService } from '../services/user.service';
@@ -17,6 +17,13 @@ export const UserController = (app: Application) => {
     const userRouter = commonController(userService);
 
     // Ajoutez les nouvelles routes ici
+    userRouter.get('/', async (req: Request, res: Response) => {
+        res.send(await userService.getAll());
+    });
+
+    userRouter.get('/:id', async (req: Request, res: Response) => {
+        res.send(await userService.getById(Number(req.params.id)));
+    });
 
     app.use('/users', userRouter);
 };
