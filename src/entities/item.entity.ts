@@ -42,7 +42,7 @@ export class Item {
   @ManyToOne((type) => Console, (console) => console.items)
   console?: Console;
 
-  @ManyToMany((type) => Tag)
+  @ManyToMany((type) => Tag, (tags) => tags.items)
   @JoinTable()
   tags?: Tag[];
 
