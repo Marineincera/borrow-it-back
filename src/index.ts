@@ -12,6 +12,7 @@ import { LoanStatusController } from './controllers/loan-status.controller';
 import { LoanController } from './controllers/loan.controller';
 import { OpinionController } from './controllers/opinion.controller';
 import { TagController } from './controllers/tag.controller';
+import { EvaluationController } from './controllers/evaluation.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
@@ -23,6 +24,7 @@ async function startServer() {
     // Ajout des différentes route de votre application
     CategoryController(app),
     ConsoleController(app),
+    EvaluationController(app),
     ItemStatusController(app),
     ItemController(app),
     LoanStatusController(app),

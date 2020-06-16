@@ -1,6 +1,7 @@
 
 import { createConnection } from 'typeorm';
 import { Category } from '../entities/category.entity';
+import { Evaluation } from '../entities/evaluation.entity';
 import { Item } from '../entities/item.entity';
 import { ItemStatus } from '../entities/item-status.entity';
 import { Loan } from '../entities/loan.entity';
@@ -15,12 +16,13 @@ export default async () => {
 await createConnection({
     type: 'mysql',
     port: 3306,
-    username: process.env.BORROW_DB_USER,
+    username: 'root',
     password: process.env.BORROW_DB_PASS, 
-    database: 'borrowit',
+    database: process.env.BORROW_DB_DATABASE,
     entities: [
         Category,
         Console,
+        Evaluation,
         Item,
         ItemStatus,
         Loan,
