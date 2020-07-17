@@ -1,27 +1,29 @@
-import 'reflect-metadata';
+import "reflect-metadata";
 
-import express from 'express';
-import loaders from './loaders';
+import express from "express";
+import loaders from "./loaders";
 
-import { UserController } from './controllers/user.controller';
-import { CategoryController } from './controllers/category.controller';
-import { ConsoleController } from './controllers/console.controller';
-import { ItemStatusController } from './controllers/item-status.controller';
-import { ItemController } from './controllers/item.controller';
-import { LoanStatusController } from './controllers/loan-status.controller';
-import { LoanController } from './controllers/loan.controller';
-import { OpinionController } from './controllers/opinion.controller';
-import { TagController } from './controllers/tag.controller';
-import { EvaluationController } from './controllers/evaluation.controller';
+import { UserController } from "./controllers/user.controller";
+import { CategoryController } from "./controllers/category.controller";
+import { ConsoleController } from "./controllers/console.controller";
+import { ItemStatusController } from "./controllers/item-status.controller";
+import { ItemController } from "./controllers/item.controller";
+import { LoanStatusController } from "./controllers/loan-status.controller";
+import { LoanController } from "./controllers/loan.controller";
+import { OpinionController } from "./controllers/opinion.controller";
+import { TagController } from "./controllers/tag.controller";
+import { EvaluationController } from "./controllers/evaluation.controller";
+import { AuthController } from "./controllers/auth.controller";
 
 async function startServer() {
-    // Récupération de l'application initiale
-    const app = express();
+  // Récupération de l'application initiale
+  const app = express();
 
-    // Chargement des différent loader
-    await loaders(app);
+  // Chargement des différent loader
+  await loaders(app);
 
-    // Ajout des différentes route de votre application
+  // Ajout des différentes route de votre application
+  AuthController(app),
     CategoryController(app),
     ConsoleController(app),
     EvaluationController(app),
@@ -33,8 +35,8 @@ async function startServer() {
     TagController(app),
     UserController(app);
 
-    // Démarrage du serveur une fois que tout est correctement init
-    app.listen(3000, () => console.log('Express server is running'));
-  }
+  // Démarrage du serveur une fois que tout est correctement init
+  app.listen(3000, () => console.log("Express server is running"));
+}
 
 startServer();
