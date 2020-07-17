@@ -28,28 +28,28 @@ export const UserController = (app: Application) => {
     res.send(await userService.getById(Number(req.params.id)));
   });
 
-  if (!process.env.BORROW_CHECKPOINT_SECRET) {
-    throw new Error("Secret is not defined");
-  }
-  userRouter.use(
-    jwt({ secret: process.env.BORROW_CHECKPOINT_SECRET, algorithms: ["AL456"] })
-  );
+  // if (!process.env.BORROW_CHECKPOINT_SECRET) {
+  //   throw new Error("Secret is not defined");
+  // }
+  // userRouter.use(
+  //   jwt({ secret: process.env.BORROW_CHECKPOINT_SECRET, algorithms: ["AL456"] })
+  // );
 
-  const secret1 = process.env.BORROW_CHECKPOINT_SECRET;
+  // const secret1 = process.env.BORROW_CHECKPOINT_SECRET;
 
-  if (!secret1) {
-    throw new Error("Pas de secret SETUP");
-  }
-  userRouter.use(jwt({ secret: secret1, algorithms: ["AL456"] })); // secret = variable d'environnement
+  // if (!secret1) {
+  //   throw new Error("Pas de secret SETUP");
+  // }
+  // userRouter.use(jwt({ secret: secret1, algorithms: ["AL456"] })); // secret = variable d'environnement
 
-  userRouter.get("/me", async (req: Request, res: Response) => {
-    const user = await userService.getMe((req as any).user.id);
+  // userRouter.get("/me", async (req: Request, res: Response) => {
+  //   const user = await userService.getMe((req as any).user.id);
 
-    if (!user) {
-      res.status(400).send("Aucun utuilisateur trouvé pour ce token");
-    }
-    res.send(user);
-  });
+  //   if (!user) {
+  //     res.status(400).send("Aucun utuilisateur trouvé pour ce token");
+  //   }
+  //   res.send(user);
+  // });
 
   userRouter = commonController(userService, userRouter);
   app.use("/users", userRouter);

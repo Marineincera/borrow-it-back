@@ -28,20 +28,6 @@ export const AuthController = (app: Application) => {
     }
   });
 
-  AuthRouter.get(
-    "/confirmation/:token",
-    async (req: Request, res: Response) => {
-      const token = req.params.token;
-      try {
-        await authService.isConfirmed(token);
-        // Si le user a activé le mail de confirmation, il est redirigé vers la page de connexion du front
-        res.redirect("http://localhost:4200/home");
-      } catch (error) {
-        res.status(400).send("Lien invalide");
-      }
-    }
-  );
-
   AuthRouter.post("/signin", async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -52,12 +38,25 @@ export const AuthController = (app: Application) => {
       res.send(user);
     } catch (error) {
       if (error.message === "NOT ACTIVE") {
-        res.status(409).send("Le compte n'est pas activé.");
+        res.status(409).send(error);
       } else {
         res.status(400).send("L'email ou le mot de passe est erroné");
       }
     }
   });
+  AuthRouter.get(
+    "/confirmation/:token",
+    async (req: Request, res: Response) => {
+      const token = req.params.token;
+      try {
+        await authService.isConfirmed(token);
+        // Si le user a activé le mail de confirmation, il est redirigé vers la page de connexion du front
+        res.redirect("http://localhost:4200/");
+      } catch (error) {
+        res.status(400).send("Lien invalide");
+      }
+    }
+  );
   // Faire error pour connection
 
   // Verification du user
