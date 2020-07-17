@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 
 import { AbstractService } from "../core/abstract.service";
 import { UserRepository } from "../repositories/user.repository";
-import { User } from "src/entities/user.entity";
+import { User } from "../entities/user.entity";
 /**
  * Cette classe est un service
  * C'est ici que l'ensemble de la logique consernant les psort doit apparaitre.
