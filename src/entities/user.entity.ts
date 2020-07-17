@@ -19,16 +19,16 @@ export class User {
   @Column({ type: "varchar", length: 225, nullable: true })
   avatar?: string;
 
-  @Column({ type: "varchar", length: 55, nullable: false })
+  @Column({ type: "varchar", length: 55, nullable: false, default: "" })
   pseudo!: string;
 
-  @Column({ type: "varchar", length: 55, nullable: false })
+  @Column({ type: "varchar", length: 55, nullable: false, default: "" })
   email!: string;
 
-  @Column({ type: "varchar", length: 255, nullable: false })
+  @Column({ type: "varchar", length: 255, nullable: false, default: "" })
   password!: string;
 
-  @Column({ type: "varchar", length: 255, nullable: false })
+  @Column({ type: "varchar", length: 255, nullable: false, default: "" })
   city!: string;
 
   @Column({ type: Date, nullable: true })
