@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/express-jwt": "0.0.42",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mysql": "^2.15.9",
     "@types/nodemailer": "^6.4.0",
