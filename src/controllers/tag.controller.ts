@@ -1,7 +1,7 @@
-import { Application } from 'express';
+import { Application } from "express";
 
-import { commonController } from '../core/abstract.controller';
-import { TagService } from '../services/tag.service';
+import { commonController } from "../core/abstract.controller";
+import { TagService } from "../services/tag.service";
 
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
@@ -11,12 +11,11 @@ import { TagService } from '../services/tag.service';
  * @param app l'application express
  */
 export const TagController = (app: Application) => {
+  const tagService = new TagService();
 
-    const tagService = new TagService();
+  const tagRouter = commonController(tagService);
 
-    const tagRouter = commonController(tagService);
+  // Ajoutez les nouvelles routes ici
 
-    // Ajoutez les nouvelles routes ici
-
-    app.use('/tag', tagRouter);
+  app.use("/tags", tagRouter);
 };
