@@ -84,7 +84,7 @@ export class AuthService {
       throw labelError;
     }
 
-    const secret1 = process.env.CHECKPOINT_SECRET;
+    const secret1 = process.env.BORROW_CHECKPOINT_SECRET;
     if (!secret1) {
       throw new Error("Pas de secret SETUP");
     }
