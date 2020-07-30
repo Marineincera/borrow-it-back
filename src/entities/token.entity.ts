@@ -15,7 +15,7 @@ export class Token {
   @Column({})
   value!: string;
 
-  @OneToOne((type) => User)
+  @OneToOne((type) => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user!: User;
 }
