@@ -2,7 +2,9 @@ import { getCustomRepository } from "typeorm";
 
 import { AbstractService } from "../core/abstract.service";
 import { UserRepository } from "../repositories/user.repository";
+
 import { User } from "../entities/user.entity";
+
 /**
  * Cette classe est un service
  * C'est ici que l'ensemble de la logique consernant les psort doit apparaitre.
@@ -45,7 +47,9 @@ export class UserService extends AbstractService {
 
   async getMe(id: number) {
     return await this.repository.findOne(id, {
-      select: ["email", "pseudo", "activated", "id"],
+
+      select: ["email", "pseudo", "id"],
+
       relations: this.relationEntities,
     });
   }

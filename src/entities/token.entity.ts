@@ -1,9 +1,11 @@
 import {
-  Column,
+
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+
 } from "typeorm";
 import { User } from "./user.entity";
 
@@ -14,9 +16,6 @@ export class Token {
 
   @Column({})
   value!: string;
-
-  @Column()
-  expiration!: Date;
 
   @OneToOne((type) => User, { onDelete: "CASCADE" })
   @JoinColumn()

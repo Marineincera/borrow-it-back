@@ -1,13 +1,8 @@
 import { getCustomRepository } from "typeorm";
-import { AbstractService } from "../core/abstract.service";
+
 import { TokenRepository } from "../repositories/token.repository";
 import { Token } from "../entities/token.entity";
 
-/**
- * Cette classe est un service
- * C'est ici que l'ensemble de la logique consernant les psort doit apparaitre.
- * Attention ! Mettez le moins possible d'element dans le controlleur
- */
 export class TokenService {
   protected repository = getCustomRepository(TokenRepository);
 

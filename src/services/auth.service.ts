@@ -1,13 +1,15 @@
-import { UserService } from "./user.service";
-import { UserRepository } from "../repositories/user.repository";
-import { User } from "../entities/user.entity";
-import { Token } from "../entities/token.entity";
-import { TokenService } from "./token.service";
 
+import { UserRepository } from "../repositories/user.repository";
+import { UserService } from "./user.service";
 import { getCustomRepository } from "typeorm";
+import { User } from "../entities/user.entity";
 import { hash, verify } from "argon2";
-import { randomBytes } from "crypto";
+import { randomBytes, Verify } from "crypto";
+import { TokenService } from "./token.service";
+import { Token } from "../entities/token.entity";
 import { sign } from "jsonwebtoken";
+import jwt = require("jsonwebtoken");
+
 import {
   createTestAccount,
   createTransport,
@@ -36,64 +38,71 @@ export class AuthService {
     }
   }
 
-  // Crypte le password
+
+  //crypte le passworde
+
   async signup(user: User) {
     if (await this.getUserSensitives(user.email)) {
       throw new Error("ALREADY_EXIST");
     }
-    console.log(user);
 
-    user.password = await hash(user.password); // from argon2
+    user.password = await hash(user.password); //argon2
+    console.log(user.password);
 
     const tokenString = randomBytes(12).toString("hex");
-
-    user = this.repository.create(user); // Initialisation d'un objet user
-    console.log("user INITIALIZED");
+    user = this.repository.create(user); // initialise l objet user
     user = await this.repository.save(user); // sauvegarder le user
+    console.log(user);
+
 
     await this.nodemailer(tokenString, user); // envoi de mail
 
     const token = new Token();
     token.user = user;
     token.value = tokenString;
-    token.expiration = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
+
     this.tokenService.create(token);
+    console.log(token);
+    console.log(token.value);
+
 
     return true;
   }
 
   async signIn(email: string, password: string) {
-    const labelError = new Error("Invalide crendentials");
-    // tslint:disable-next-line: max-line-length
+
+    const labelError = new Error("Credentials are not valid");
+
     const user = await this.repository.findOne({
       where: { email },
-      select: ["id", "email", "pseudo", "activated", "password"],
-    }); // équivalent {where: {email:email}}
-    // Si il n'y a pas eu d'activation de compte, renvoi l'erreur NOT ACTIVE
-    // Si il y a actived true => continue la méthode signin
-    if (!user?.activated) {
-      throw new Error("NOT ACTIVE");
-    }
+      select: ["id", "password", "email", "pseudo"],
+    });
+    console.log(user);
 
     if (!user) {
-      // Si pas user
+
       throw labelError;
     }
     const isValid = await verify(user.password, password);
     if (!isValid) {
       throw labelError;
+
+      console.log("notValid");
+    } else {
+      console.log("isValid");
     }
 
-    const secret1 = process.env.BORROW_CHECKPOINT_SECRET;
+    const secret1 = process.env.BORROW_JWT_SECRET;
     if (!secret1) {
       throw new Error("Pas de secret SETUP");
     }
-    delete user.password;
-    const token = sign(
-      // from jsonwebtoken
-      { id: user.id, pseudo: user.pseudo, email: user.email }, // id, username, role dans sign PAS DE PASSWORD !
+
+    const token = await sign(
+      { id: user.id, pseudo: user.pseudo, email: user.email },
       secret1
-    ); // PrivateKey à entrer comme une variable environnement
+    );
+
+
     return { token, user };
   }
 
@@ -128,8 +137,10 @@ export class AuthService {
       subject: "Activation link", // Subject line
       text: "Hello world?", // plain text body
       html: `<b> Hello ${user.pseudo} <a href="http://localhost:3000/auth/confirmation/${token}">
-            Activation link </a>
-            </b>`, // html body
+
+        Activation link </a>
+        </b>`, // html body
+
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -140,29 +151,4 @@ export class AuthService {
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
 
-  // Test verification user
-  async verif(email: string, password: string) {
-    const labelError = new Error("Invalide crendentials");
-    const user = await this.repository.findOne({
-      where: { email },
-      select: ["id", "password", "email", "activated", "pseudo"],
-    }); // équivalent {where: {email:email}}
-
-    if (!user) {
-      // Si pas user
-      throw labelError;
-    }
-    const isValid = await verify(user.password, password);
-    if (!isValid) {
-      throw labelError;
-    }
-
-    const secret1 = process.env.BORROW_CHECKPOINT_SECRET;
-    if (!secret1) {
-      throw new Error("Pas de secret SETUP");
-    }
-    delete user.password;
-
-    return user;
-  }
 }
