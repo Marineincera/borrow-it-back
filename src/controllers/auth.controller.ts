@@ -1,5 +1,7 @@
+
 import express, { Application, Router, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
+
 
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
@@ -15,13 +17,12 @@ export const AuthController = (app: Application) => {
 
   AuthRouter.post("/signup", async (req: Request, res: Response) => {
     const user = req.body;
-    try {
+
       await authService.signup(user);
       res.sendStatus(204);
     } catch (error) {
       if (error.message === "ALREADY_EXIST") {
         res.send({ Erreur: "Informations déjà utilisées" });
-        res.sendStatus(409).send("Infos déjà utilisées");
       } else {
         res.status(409).send("Erreur lors de l'inscription");
       }
@@ -32,16 +33,17 @@ export const AuthController = (app: Application) => {
     const email = req.body.email;
     const password = req.body.password;
     console.log({ email, password });
-
     try {
       const { token, user } = await authService.signIn(email, password);
       res.set("access-control-expose-headers", "JWT_TOKEN");
       res.set("JWT_TOKEN", token);
       res.send(user);
     } catch (error) {
+
       res.status(409).send(error);
     }
   });
+
 
   AuthRouter.get(
     "/confirmation/:token",
@@ -56,6 +58,7 @@ export const AuthController = (app: Application) => {
       }
     }
   );
+
 
   app.use("/auth", AuthRouter);
 };

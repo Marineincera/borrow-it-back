@@ -1,3 +1,4 @@
+
 import { UserRepository } from "../repositories/user.repository";
 import { UserService } from "./user.service";
 import { getCustomRepository } from "typeorm";
@@ -8,6 +9,7 @@ import { TokenService } from "./token.service";
 import { Token } from "../entities/token.entity";
 import { sign } from "jsonwebtoken";
 import jwt = require("jsonwebtoken");
+
 import {
   createTestAccount,
   createTransport,
@@ -36,11 +38,14 @@ export class AuthService {
     }
   }
 
+
   //crypte le passworde
+
   async signup(user: User) {
     if (await this.getUserSensitives(user.email)) {
       throw new Error("ALREADY_EXIST");
     }
+
     user.password = await hash(user.password); //argon2
     console.log(user.password);
 
@@ -49,19 +54,23 @@ export class AuthService {
     user = await this.repository.save(user); // sauvegarder le user
     console.log(user);
 
+
     await this.nodemailer(tokenString, user); // envoi de mail
 
     const token = new Token();
     token.user = user;
     token.value = tokenString;
+
     this.tokenService.create(token);
     console.log(token);
     console.log(token.value);
+
 
     return true;
   }
 
   async signIn(email: string, password: string) {
+
     const labelError = new Error("Credentials are not valid");
 
     const user = await this.repository.findOne({
@@ -71,11 +80,13 @@ export class AuthService {
     console.log(user);
 
     if (!user) {
+
       throw labelError;
     }
     const isValid = await verify(user.password, password);
     if (!isValid) {
       throw labelError;
+
       console.log("notValid");
     } else {
       console.log("isValid");
@@ -90,6 +101,7 @@ export class AuthService {
       { id: user.id, pseudo: user.pseudo, email: user.email },
       secret1
     );
+
 
     return { token, user };
   }
@@ -125,8 +137,10 @@ export class AuthService {
       subject: "Activation link", // Subject line
       text: "Hello world?", // plain text body
       html: `<b> Hello ${user.pseudo} <a href="http://localhost:3000/auth/confirmation/${token}">
+
         Activation link </a>
         </b>`, // html body
+
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -136,4 +150,5 @@ export class AuthService {
     console.log("Preview URL: %s", getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
+
 }
