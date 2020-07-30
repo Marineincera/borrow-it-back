@@ -57,4 +57,7 @@ export class User {
 
   @OneToMany((type) => Evaluation, (evaluation) => evaluation.user)
   evaluations?: Evaluation[];
+
+  @Column({ type: "bool", default: false })
+  activated?: boolean;
 }
