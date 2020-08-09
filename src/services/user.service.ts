@@ -54,4 +54,16 @@ export class UserService extends AbstractService {
       relations: this.relationEntities,
     });
   }
+
+  // add a user avatar
+
+  async addAvatar(id: number, avatar: string) {
+    const user = await this.repository.findOne(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.avatar = "uploads/" + avatar;
+    return this.repository.save(user);
+  }
 }
