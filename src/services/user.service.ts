@@ -55,6 +55,15 @@ export class UserService extends AbstractService {
     });
   }
 
+  async modifyAUser(id: number, user: any) {
+    const userUpdated = await this.repository.update(id, user);
+    // tslint:disable-next-line: max-line-length
+    return this.repository.findOne(id, {
+      select: ["email", "pseudo", "city", "avatar", "id"],
+      relations: this.relationEntities,
+    });
+  }
+
   // add a user avatar
 
   async addAvatar(id: number, avatar: string) {
