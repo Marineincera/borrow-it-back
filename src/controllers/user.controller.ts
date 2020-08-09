@@ -4,7 +4,9 @@ import { commonController } from "../core/abstract.controller";
 import { UserService } from "../services/user.service";
 import jwt = require("express-jwt");
 import jwt2 = require("jsonwebtoken");
-
+// upload avatar
+import multer from "multer";
+var upload = multer({ dest: "../uploads/" });
 
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
@@ -15,6 +17,19 @@ import jwt2 = require("jsonwebtoken");
  */
 export const UserController = (app: Application) => {
   const userService = new UserService();
+
+  // upload avatar
+  const storage = multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "../uploads/");
+    },
+    filename(req, file, cb) {
+      const tab = file.originalname.split(".");
+      cb(null, file.fieldname + "-" + Date.now() + "." + tab[tab.length - 1]);
+    },
+  });
+  const upload = multer({ storage });
+  ////////
 
   let userRouter = Router();
   // Ajoutez les nouvelles routes ici
@@ -45,9 +60,22 @@ export const UserController = (app: Application) => {
 
     if (!user) {
       res.status(400).send("Aucun utilisateur trouvé pour ce token");
+    } else {
+      res.send(user);
     }
-    res.send(user);
   });
+
+  // Upload avatar
+
+  userRouter.post(
+    "/avatar/:id",
+    upload.single("avatar"),
+    async (req: Request, res: Response) => {
+      const document = req.body;
+      const userId = parseInt(req.params.id, 10);
+      res.send(await userService.addAvatar(userId, req.file.filename));
+    }
+  );
 
   userRouter = commonController(userService, userRouter);
   app.use("/users", userRouter);

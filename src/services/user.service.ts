@@ -30,7 +30,9 @@ export class UserService extends AbstractService {
   ];
 
   getAll() {
-    return this.repository.find({ relations: this.relationEntities });
+    return this.repository.find({
+      relations: this.relationEntities,
+    });
   }
 
   getById(id: number) {
@@ -47,10 +49,21 @@ export class UserService extends AbstractService {
 
   async getMe(id: number) {
     return await this.repository.findOne(id, {
-
-      select: ["email", "pseudo", "id"],
+      select: ["email", "pseudo", "id", "city", "avatar"],
 
       relations: this.relationEntities,
     });
+  }
+
+  // add a user avatar
+
+  async addAvatar(id: number, avatar: string) {
+    const user = await this.repository.findOne(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.avatar = "uploads/" + avatar;
+    return this.repository.save(user);
   }
 }
