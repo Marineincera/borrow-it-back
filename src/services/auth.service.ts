@@ -1,4 +1,3 @@
-
 import { UserRepository } from "../repositories/user.repository";
 import { UserService } from "./user.service";
 import { getCustomRepository } from "typeorm";
@@ -38,7 +37,6 @@ export class AuthService {
     }
   }
 
-
   //crypte le passworde
 
   async signup(user: User) {
@@ -54,7 +52,6 @@ export class AuthService {
     user = await this.repository.save(user); // sauvegarder le user
     console.log(user);
 
-
     await this.nodemailer(tokenString, user); // envoi de mail
 
     const token = new Token();
@@ -65,22 +62,19 @@ export class AuthService {
     console.log(token);
     console.log(token.value);
 
-
     return true;
   }
 
   async signIn(email: string, password: string) {
-
     const labelError = new Error("Credentials are not valid");
 
     const user = await this.repository.findOne({
       where: { email },
-      select: ["id", "password", "email", "pseudo"],
+      select: ["id", "password", "email", "pseudo", "city", "avatar"],
     });
     console.log(user);
 
     if (!user) {
-
       throw labelError;
     }
     const isValid = await verify(user.password, password);
@@ -101,7 +95,6 @@ export class AuthService {
       { id: user.id, pseudo: user.pseudo, email: user.email },
       secret1
     );
-
 
     return { token, user };
   }
@@ -140,7 +133,6 @@ export class AuthService {
 
         Activation link </a>
         </b>`, // html body
-
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -150,5 +142,4 @@ export class AuthService {
     console.log("Preview URL: %s", getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
-
 }

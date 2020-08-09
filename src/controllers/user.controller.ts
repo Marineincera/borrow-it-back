@@ -5,7 +5,6 @@ import { UserService } from "../services/user.service";
 import jwt = require("express-jwt");
 import jwt2 = require("jsonwebtoken");
 
-
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
  * Le controlle rest la partie de l'application qui est en charge de la reception
@@ -45,8 +44,9 @@ export const UserController = (app: Application) => {
 
     if (!user) {
       res.status(400).send("Aucun utilisateur trouvé pour ce token");
+    } else {
+      res.send(user);
     }
-    res.send(user);
   });
 
   userRouter = commonController(userService, userRouter);
