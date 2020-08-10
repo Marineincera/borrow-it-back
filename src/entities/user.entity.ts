@@ -60,4 +60,8 @@ export class User {
 
   @Column({ type: "bool", default: false })
   activated?: boolean;
+
+  @ManyToMany((type) => User)
+  @JoinTable()
+  friends?: User[];
 }
