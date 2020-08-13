@@ -18,19 +18,12 @@ export class LoanService extends AbstractService {
     super();
   }
 
-  relationEntities = ["borrower", "owner", "borrowedItem", "loanStatus"];
+  relationEntities = ["owner", "borrowedItem", "loanStatus", "borrower"];
 
   getAll() {
     return this.repository.find({
       relations: this.relationEntities,
-      select: [
-        "id",
-        "loanStatus",
-        "owner",
-        "borrower",
-        "borrowedItem",
-        "borrowDate",
-      ],
+      select: ["id", "loanStatus", "owner", "borrower", "borrowedItem"],
     });
   }
 
@@ -38,14 +31,21 @@ export class LoanService extends AbstractService {
     return this.repository.findOne(id, {
       relations: this.relationEntities,
       where: { id },
-      select: [
-        "id",
-        "loanStatus",
-        "owner",
-        "borrower",
-        "borrowedItem",
-        "borrowDate",
-      ],
+      select: ["id", "loanStatus", "owner", "borrower", "borrowedItem"],
     });
   }
+
+  // getByUserId(id: number) {
+  //   return this.repository.findOne(id, {
+  //     where: { owner: { id } },
+  //     select: [
+  //       "id",
+  //       "loanStatus",
+  //       "owner",
+  //       "borrower",
+  //       "borrowedItem",
+  //       "borrowDate",
+  //     ],
+  //   });
+  // }
 }

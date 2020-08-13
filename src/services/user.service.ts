@@ -28,6 +28,14 @@ export class UserService extends AbstractService {
     "evaluations.item",
     "items.user",
     "loans.loanStatus",
+    "loans.borrower",
+    "loans.borrowedItem",
+    "loans.owner",
+    "borrows.borrowedItem",
+    "borrows",
+    "borrows.loanStatus",
+    "borrows.borrower",
+    "borrows.owner",
   ];
 
   getAll() {

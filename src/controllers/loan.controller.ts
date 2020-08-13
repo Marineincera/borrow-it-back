@@ -20,5 +20,9 @@ export const LoanController = (app: Application) => {
     res.send(await loanService.add(req.body));
   });
 
+  // loanRouter.get("/user/:id", async (req: Request, res: Response) => {
+  //   res.send(await loanService.getByUserId(Number(req.params.id)));
+  // });
+
   app.use("/loans", loanRouter);
 };
