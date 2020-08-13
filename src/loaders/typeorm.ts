@@ -10,6 +10,7 @@ import { Tag } from "../entities/tag.entity";
 import { User } from "../entities/user.entity";
 import { Console } from "../entities/console.entity";
 import { Token } from "../entities/token.entity";
+import { Friendship } from "../entities/friendship.entity";
 
 export default async () => {
   await createConnection({
@@ -22,6 +23,7 @@ export default async () => {
       Category,
       Console,
       Evaluation,
+      Friendship,
       Item,
       ItemStatus,
       Loan,

@@ -11,6 +11,8 @@ import { Item } from "./item.entity";
 import { Opinion } from "./opinion.entity";
 import { Loan } from "./loan.entity";
 import { Evaluation } from "./evaluation.entity";
+import { userInfo } from "os";
+import { Friendship } from "./friendship.entity";
 
 @Entity("user")
 export class User {
@@ -61,4 +63,8 @@ export class User {
 
   @Column({ type: "bool", default: false })
   activated?: boolean;
+
+  @ManyToMany((type) => Friendship, (friendship) => friendship.friendA)
+  @JoinTable()
+  friendships?: Friendship[];
 }

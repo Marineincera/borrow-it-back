@@ -36,6 +36,7 @@ export class UserService extends AbstractService {
     "borrows.loanStatus",
     "borrows.borrower",
     "borrows.owner",
+    "friendships",
   ];
 
   getAll() {

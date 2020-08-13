@@ -3,17 +3,18 @@ import "reflect-metadata";
 import express from "express";
 import loaders from "./loaders";
 
-import { UserController } from "./controllers/user.controller";
+import { AuthController } from "./controllers/auth.controller";
 import { CategoryController } from "./controllers/category.controller";
 import { ConsoleController } from "./controllers/console.controller";
+import { EvaluationController } from "./controllers/evaluation.controller";
+import { FriendshipController } from "./controllers/friendship.controller";
 import { ItemStatusController } from "./controllers/item-status.controller";
 import { ItemController } from "./controllers/item.controller";
 import { LoanStatusController } from "./controllers/loan-status.controller";
 import { LoanController } from "./controllers/loan.controller";
 import { OpinionController } from "./controllers/opinion.controller";
 import { TagController } from "./controllers/tag.controller";
-import { EvaluationController } from "./controllers/evaluation.controller";
-import { AuthController } from "./controllers/auth.controller";
+import { UserController } from "./controllers/user.controller";
 
 async function startServer() {
   // Récupération de l'application initiale
@@ -27,6 +28,7 @@ async function startServer() {
     CategoryController(app),
     ConsoleController(app),
     EvaluationController(app),
+    FriendshipController(app),
     ItemStatusController(app),
     ItemController(app),
     LoanStatusController(app),
