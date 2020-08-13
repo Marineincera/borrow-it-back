@@ -65,6 +65,12 @@ export const UserController = (app: Application) => {
     }
   });
 
+  userRouter.put("/modify/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    const user = req.body;
+    res.send(await userService.modifyAUser(id, user));
+  });
+
   // Upload avatar
 
   userRouter.post(

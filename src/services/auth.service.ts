@@ -95,7 +95,7 @@ export class AuthService {
       { id: user.id, pseudo: user.pseudo, email: user.email },
       secret1
     );
-
+    delete user.password;
     return { token, user };
   }
 

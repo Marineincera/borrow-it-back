@@ -5,6 +5,7 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from "typeorm";
 import { Item } from "./item.entity";
 import { Opinion } from "./opinion.entity";
@@ -16,7 +17,7 @@ export class User {
   @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
-  @Column({ type: "varchar", length: 225, nullable: true })
+  @Column({ type: "varchar", length: 525, nullable: true })
   avatar?: string;
 
   @Column({ type: "varchar", length: 55, nullable: false, default: "" })

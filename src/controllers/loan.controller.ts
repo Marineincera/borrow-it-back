@@ -1,7 +1,7 @@
-import { Application } from 'express';
+import { Application, Request, Response } from "express";
 
-import { commonController } from '../core/abstract.controller';
-import { LoanService } from '../services/loan.service';
+import { commonController } from "../core/abstract.controller";
+import { LoanService } from "../services/loan.service";
 
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
@@ -11,12 +11,18 @@ import { LoanService } from '../services/loan.service';
  * @param app l'application express
  */
 export const LoanController = (app: Application) => {
+  const loanService = new LoanService();
 
-    const loanService = new LoanService();
+  const loanRouter = commonController(loanService);
 
-    const loanRouter = commonController(loanService);
+  // Ajoutez les nouvelles routes ici
+  loanRouter.post("/", async (req: Request, res: Response) => {
+    res.send(await loanService.add(req.body));
+  });
 
-    // Ajoutez les nouvelles routes ici
+  // loanRouter.get("/user/:id", async (req: Request, res: Response) => {
+  //   res.send(await loanService.getByUserId(Number(req.params.id)));
+  // });
 
-    app.use('/loan', loanRouter);
+  app.use("/loans", loanRouter);
 };

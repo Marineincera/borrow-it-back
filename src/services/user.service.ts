@@ -27,11 +27,21 @@ export class UserService extends AbstractService {
     "evaluations",
     "evaluations.item",
     "items.user",
+    "loans.loanStatus",
+    "loans.borrower",
+    "loans.borrowedItem",
+    "loans.owner",
+    "borrows.borrowedItem",
+    "borrows",
+    "borrows.loanStatus",
+    "borrows.borrower",
+    "borrows.owner",
   ];
 
   getAll() {
     return this.repository.find({
       relations: this.relationEntities,
+      select: ["email", "pseudo", "id", "city", "avatar"],
     });
   }
 
@@ -39,6 +49,7 @@ export class UserService extends AbstractService {
     return this.repository.findOne(id, {
       relations: this.relationEntities,
       where: { id },
+      select: ["email", "pseudo", "id", "city", "avatar"],
     });
   }
 
@@ -51,6 +62,15 @@ export class UserService extends AbstractService {
     return await this.repository.findOne(id, {
       select: ["email", "pseudo", "id", "city", "avatar"],
 
+      relations: this.relationEntities,
+    });
+  }
+
+  async modifyAUser(id: number, user: any) {
+    const userUpdated = await this.repository.update(id, user);
+    // tslint:disable-next-line: max-line-length
+    return this.repository.findOne(id, {
+      select: ["email", "pseudo", "city", "avatar", "id"],
       relations: this.relationEntities,
     });
   }

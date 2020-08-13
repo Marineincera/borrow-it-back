@@ -25,6 +25,9 @@ export class Item {
   title!: string;
 
   @Column({ type: "varchar", length: 255, nullable: true })
+  author?: string;
+
+  @Column({ type: "varchar", length: 255, nullable: true })
   image?: string;
 
   @Column({ type: "varchar", length: 555, nullable: true })
@@ -47,7 +50,7 @@ export class Item {
   tags?: Tag[];
 
   @ManyToOne((type) => ItemStatus, (itemStatus) => itemStatus.items)
-  itemStatus!: ItemStatus;
+  itemStatus?: ItemStatus;
 
   @OneToMany((type) => Loan, (loan) => loan.borrowedItem)
   loans?: Loan[];
