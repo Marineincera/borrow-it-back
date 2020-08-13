@@ -27,7 +27,9 @@ export class ItemService extends AbstractService {
   ];
 
   getAll() {
-    return this.repository.find({ relations: this.relationEntities });
+    return this.repository.find({
+      relations: this.relationEntities,
+    });
   }
 
   getFilterItems(number: number) {

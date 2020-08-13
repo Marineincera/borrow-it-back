@@ -5,6 +5,7 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from "typeorm";
 import { Item } from "./item.entity";
 import { Opinion } from "./opinion.entity";
@@ -60,8 +61,4 @@ export class User {
 
   @Column({ type: "bool", default: false })
   activated?: boolean;
-
-  @ManyToMany((type) => User)
-  @JoinTable()
-  friends?: User[];
 }

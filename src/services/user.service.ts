@@ -41,6 +41,7 @@ export class UserService extends AbstractService {
   getAll() {
     return this.repository.find({
       relations: this.relationEntities,
+      select: ["email", "pseudo", "id", "city", "avatar"],
     });
   }
 
@@ -48,6 +49,7 @@ export class UserService extends AbstractService {
     return this.repository.findOne(id, {
       relations: this.relationEntities,
       where: { id },
+      select: ["email", "pseudo", "id", "city", "avatar"],
     });
   }
 
