@@ -25,6 +25,9 @@ export class Item {
   title!: string;
 
   @Column({ type: "varchar", length: 255, nullable: true })
+  author?: string;
+
+  @Column({ type: "varchar", length: 255, nullable: true })
   image?: string;
 
   @Column({ type: "varchar", length: 555, nullable: true })
