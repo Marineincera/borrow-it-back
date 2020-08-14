@@ -11,6 +11,7 @@ import { User } from "../entities/user.entity";
 import { Console } from "../entities/console.entity";
 import { Token } from "../entities/token.entity";
 import { Friendship } from "../entities/friendship.entity";
+import { FriendshipStatus } from "../entities/friendship-status.entity";
 
 export default async () => {
   await createConnection({
@@ -24,6 +25,7 @@ export default async () => {
       Console,
       Evaluation,
       Friendship,
+      FriendshipStatus,
       Item,
       ItemStatus,
       Loan,

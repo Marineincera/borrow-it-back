@@ -8,6 +8,7 @@ import { CategoryController } from "./controllers/category.controller";
 import { ConsoleController } from "./controllers/console.controller";
 import { EvaluationController } from "./controllers/evaluation.controller";
 import { FriendshipController } from "./controllers/friendship.controller";
+import { FriendshipStatusController } from "./controllers/frienship-status.controller";
 import { ItemStatusController } from "./controllers/item-status.controller";
 import { ItemController } from "./controllers/item.controller";
 import { LoanStatusController } from "./controllers/loan-status.controller";
@@ -29,6 +30,7 @@ async function startServer() {
     ConsoleController(app),
     EvaluationController(app),
     FriendshipController(app),
+    FriendshipStatusController(app),
     ItemStatusController(app),
     ItemController(app),
     LoanStatusController(app),

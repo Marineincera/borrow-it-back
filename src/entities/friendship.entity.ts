@@ -6,6 +6,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { User } from "./user.entity";
+import { FriendshipStatus } from "./friendship-status.entity";
 
 @Entity("friendship")
 export class Friendship {
@@ -20,4 +21,10 @@ export class Friendship {
 
   @ManyToOne((type) => User, (user) => user.id)
   friendB!: User;
+
+  @ManyToOne(
+    (type) => FriendshipStatus,
+    (friendshipstatus) => friendshipstatus.id
+  )
+  status?: FriendshipStatus;
 }
