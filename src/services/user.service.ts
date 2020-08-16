@@ -37,6 +37,17 @@ export class UserService extends AbstractService {
     "borrows.borrower",
     "borrows.owner",
     "friendships",
+    "friendships.status",
+    "friendships.asker",
+    "friendships.answerer",
+    "friendDemandsSend",
+    "friendDemandsSend.asker",
+    "friendDemandsSend.userAskedForFriend",
+    "friendDemandsSend.status",
+    "friendDemandsReceived",
+    "friendDemandsReceived.asker",
+    "friendDemandsReceived.userAskedForFriend",
+    "friendDemandsReceived.status",
   ];
 
   getAll() {

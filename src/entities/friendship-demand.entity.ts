@@ -1,15 +1,9 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  ManyToOne,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./user.entity";
 import { FriendshipStatus } from "./friendship-status.entity";
 
-@Entity("friendship")
-export class Friendship {
+@Entity("friendshipDemand")
+export class FriendshipDemand {
   @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
@@ -20,7 +14,7 @@ export class Friendship {
   asker!: User;
 
   @ManyToOne((type) => User, (user) => user.id)
-  answerer!: User;
+  userAskedForFriend!: User;
 
   @ManyToOne(
     (type) => FriendshipStatus,

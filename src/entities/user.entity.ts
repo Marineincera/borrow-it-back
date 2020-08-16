@@ -13,6 +13,7 @@ import { Loan } from "./loan.entity";
 import { Evaluation } from "./evaluation.entity";
 import { userInfo } from "os";
 import { Friendship } from "./friendship.entity";
+import { FriendshipDemand } from "./friendship-demand.entity";
 
 @Entity("user")
 export class User {
@@ -64,7 +65,19 @@ export class User {
   @Column({ type: "bool", default: false })
   activated?: boolean;
 
-  @ManyToMany((type) => Friendship, (friendship) => friendship.friendA)
+  @OneToMany(
+    (type) => FriendshipDemand,
+    (friendshipDemand) => friendshipDemand.asker
+  )
+  friendDemandsSend?: FriendshipDemand[];
+
+  @OneToMany(
+    (type) => FriendshipDemand,
+    (friendshipDemand) => friendshipDemand.userAskedForFriend
+  )
+  friendDemandsReceived?: FriendshipDemand[];
+
+  @ManyToMany((type) => Friendship)
   @JoinTable()
   friendships?: Friendship[];
 }

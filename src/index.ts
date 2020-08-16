@@ -16,6 +16,7 @@ import { LoanController } from "./controllers/loan.controller";
 import { OpinionController } from "./controllers/opinion.controller";
 import { TagController } from "./controllers/tag.controller";
 import { UserController } from "./controllers/user.controller";
+import { FriendshipDemandController } from "./controllers/friendship-demand.controller";
 
 async function startServer() {
   // Récupération de l'application initiale
@@ -30,6 +31,7 @@ async function startServer() {
     ConsoleController(app),
     EvaluationController(app),
     FriendshipController(app),
+    FriendshipDemandController(app),
     FriendshipStatusController(app),
     ItemStatusController(app),
     ItemController(app),
