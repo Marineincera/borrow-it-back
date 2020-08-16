@@ -12,7 +12,6 @@ import { Opinion } from "./opinion.entity";
 import { Loan } from "./loan.entity";
 import { Evaluation } from "./evaluation.entity";
 import { userInfo } from "os";
-import { Friendship } from "./friendship.entity";
 import { FriendshipDemand } from "./friendship-demand.entity";
 
 @Entity("user")
@@ -76,8 +75,4 @@ export class User {
     (friendshipDemand) => friendshipDemand.userAskedForFriend
   )
   friendDemandsReceived?: FriendshipDemand[];
-
-  @ManyToMany((type) => Friendship)
-  @JoinTable()
-  friendships?: Friendship[];
 }

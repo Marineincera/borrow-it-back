@@ -1,7 +1,6 @@
 import { getCustomRepository } from "typeorm";
 
 import { AbstractService } from "../core/abstract.service";
-import { FriendshipRepository } from "../repositories/friendship.repository";
 import { FriendshipDemandRepository } from "../repositories/friendship-demand.repository";
 /**
  * Cette classe est un service

@@ -7,7 +7,6 @@ import { AuthController } from "./controllers/auth.controller";
 import { CategoryController } from "./controllers/category.controller";
 import { ConsoleController } from "./controllers/console.controller";
 import { EvaluationController } from "./controllers/evaluation.controller";
-import { FriendshipController } from "./controllers/friendship.controller";
 import { FriendshipStatusController } from "./controllers/frienship-status.controller";
 import { ItemStatusController } from "./controllers/item-status.controller";
 import { ItemController } from "./controllers/item.controller";
@@ -30,7 +29,6 @@ async function startServer() {
     CategoryController(app),
     ConsoleController(app),
     EvaluationController(app),
-    FriendshipController(app),
     FriendshipDemandController(app),
     FriendshipStatusController(app),
     ItemStatusController(app),

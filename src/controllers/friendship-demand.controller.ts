@@ -1,7 +1,6 @@
 import { Application, Request, Response } from "express";
 
 import { commonController } from "../core/abstract.controller";
-import { FriendshipService } from "../services/friendship.service";
 import { FriendshipDemandService } from "../services/friendship-demand.service";
 
 /**
