@@ -14,7 +14,13 @@ export class FriendshipDemandService extends AbstractService {
     super();
   }
 
-  relationEntities = ["status", "asker", "userAskedForFriend"];
+  relationEntities = [
+    "status",
+    "asker",
+    "userAskedForFriend",
+    "asker.items",
+    "userAskedForFriend.items",
+  ];
 
   getAll() {
     return this.repository.find({ relations: this.relationEntities });

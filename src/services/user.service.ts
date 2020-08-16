@@ -43,7 +43,8 @@ export class UserService extends AbstractService {
     "friendDemandsSend.status",
     "friendDemandsReceived",
     "friendDemandsReceived.asker",
-    "friendDemandsReceived.userAskedForFriend",
+    // "friendDemandsSend.asker.items",
+    // "friendDemandsSend.userAskedForFriend.items",
     "friendDemandsReceived.status",
   ];
 
