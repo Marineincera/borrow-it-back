@@ -52,6 +52,8 @@ export class Item {
   @ManyToOne((type) => ItemStatus, (itemStatus) => itemStatus.items)
   itemStatus?: ItemStatus;
 
+  // EXTRAS
+
   @OneToMany((type) => Loan, (loan) => loan.borrowedItem)
   loans?: Loan[];
 

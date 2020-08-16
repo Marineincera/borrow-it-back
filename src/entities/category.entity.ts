@@ -1,18 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Item } from './item.entity';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Item } from "./item.entity";
 
-@Entity('category')
+@Entity("category")
 export class Category {
+  @PrimaryGeneratedColumn({ type: "int" })
+  id!: number;
 
-    @PrimaryGeneratedColumn({ type: 'int'})
-    id!: number;
+  @Column({ type: "varchar", length: 205, nullable: false })
+  name!: string;
 
-    @Column({type: 'varchar', length: 205, nullable: false})
-    name!: string;
+  @Column({ type: Date, nullable: true })
+  creationDate?: Date;
 
-    @Column({type: Date, nullable: true})
-    creationDate?: Date;
-
-    @OneToMany(type => Item, item => item.category)
-    items?: Item[];
+  //EXTRAS
+  @OneToMany((type) => Item, (item) => item.category)
+  items?: Item[];
 }

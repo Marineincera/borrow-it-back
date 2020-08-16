@@ -24,13 +24,17 @@ export class Evaluation {
 
   @Column({
     type: "int",
-    nullable: false,
   })
-  note!: number;
+  note?: number;
 
   @ManyToOne((type) => Item, (item) => item.evaluations)
   item!: Item;
 
   @ManyToOne((type) => User, (user) => user.evaluations)
   user?: User;
+
+  @Column({
+    type: "varchar",
+  })
+  opinion?: string;
 }
