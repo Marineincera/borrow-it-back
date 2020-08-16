@@ -23,10 +23,10 @@ export class Evaluation {
   id!: number;
 
   @Column({
-    type: "enum",
-    enum: noteGiven,
+    type: "int",
+    nullable: false,
   })
-  note!: noteGiven;
+  note!: number;
 
   @ManyToOne((type) => Item, (item) => item.evaluations)
   item!: Item;

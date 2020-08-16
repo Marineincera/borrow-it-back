@@ -1,6 +1,8 @@
 import { createConnection } from "typeorm";
 import { Category } from "../entities/category.entity";
 import { Evaluation } from "../entities/evaluation.entity";
+import { FriendshipDemand } from "../entities/friendship-demand.entity";
+import { FriendshipStatus } from "../entities/friendship-status.entity";
 import { Item } from "../entities/item.entity";
 import { ItemStatus } from "../entities/item-status.entity";
 import { Loan } from "../entities/loan.entity";
@@ -22,6 +24,8 @@ export default async () => {
       Category,
       Console,
       Evaluation,
+      FriendshipDemand,
+      FriendshipStatus,
       Item,
       ItemStatus,
       Loan,
