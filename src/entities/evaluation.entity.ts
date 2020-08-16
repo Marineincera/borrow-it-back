@@ -22,11 +22,8 @@ export class Evaluation {
   @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
-  @Column({
-    type: "enum",
-    enum: noteGiven,
-  })
-  note!: noteGiven;
+  @Column({ type: "int", nullable: false })
+  givenNote?: number;
 
   @ManyToOne((type) => Item, (item) => item.evaluations)
   item!: Item;

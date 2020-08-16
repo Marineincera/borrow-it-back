@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Item } from "./item.entity";
+import { FriendshipDemand } from "./friendship-demand.entity";
 
 @Entity("itemStatus")
 export class ItemStatus {

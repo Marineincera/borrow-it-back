@@ -39,7 +39,9 @@ export class UserService extends AbstractService {
 
     "friendDemandsSend",
     "friendDemandsSend.asker",
+    "friendDemandsSend.asker.items",
     "friendDemandsSend.userAskedForFriend",
+    "friendDemandsSend.userAskedForFriend.items",
     "friendDemandsSend.status",
     "friendDemandsReceived",
     "friendDemandsReceived.asker",

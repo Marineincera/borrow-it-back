@@ -37,11 +37,11 @@ export class User {
   @Column({ type: Date, nullable: true })
   registrationDate?: Date;
 
-  @Column({ type: "bool", nullable: false, default: false })
-  walkingDelivery?: boolean;
+  // @Column({ type: "bool", nullable: false, default: false })
+  // walkingDelivery?: boolean;
 
-  @Column({ type: "bool", nullable: false, default: false })
-  letterDelivery?: boolean;
+  // @Column({ type: "bool", nullable: false, default: false })
+  // letterDelivery?: boolean;
 
   @OneToMany((type) => Item, (item) => item.user)
   items?: Array<Item>;
