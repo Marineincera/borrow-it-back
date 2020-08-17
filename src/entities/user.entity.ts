@@ -19,7 +19,7 @@ export class User {
   @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "text", nullable: true })
   avatar?: string;
 
   @Column({ type: "varchar", length: 55, nullable: false, default: "" })
