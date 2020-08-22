@@ -19,7 +19,7 @@ export class User {
   @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "text", nullable: true })
   avatar?: string;
 
   @Column({ type: "varchar", length: 55, nullable: false, default: "" })
@@ -36,6 +36,10 @@ export class User {
 
   @Column({ type: Date, nullable: true })
   registrationDate?: Date;
+  @Column({ type: "bool", default: false })
+  activated?: boolean;
+
+  //EXTRAS
 
   @OneToMany((type) => Item, (item) => item.user)
   items?: Array<Item>;
@@ -46,17 +50,8 @@ export class User {
   @OneToMany((type) => Loan, (loan) => loan.owner)
   loans?: Loan[];
 
-  @OneToMany((type) => Opinion, (opinion) => opinion.author)
-  writtenOpinions?: Array<Opinion>;
-
-  @OneToMany((type) => Opinion, (opinion) => opinion.addressee)
-  receivedOpinions?: Array<Opinion>;
-
   @OneToMany((type) => Evaluation, (evaluation) => evaluation.user)
   evaluations?: Evaluation[];
-
-  @Column({ type: "bool", default: false })
-  activated?: boolean;
 
   @OneToMany(
     (type) => FriendshipDemand,

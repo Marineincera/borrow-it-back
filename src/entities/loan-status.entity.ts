@@ -9,6 +9,10 @@ export class LoanStatus {
   @Column({ type: "varchar", length: 255, nullable: false })
   name!: string;
 
+  @Column({ type: Date, nullable: true })
+  creationDate?: Date;
+
+  //EXTRAS
   @OneToMany((type) => Loan, (loan) => loan.loanStatus)
   loans?: Array<Loan>;
 }

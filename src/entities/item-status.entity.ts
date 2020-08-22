@@ -9,6 +9,11 @@ export class ItemStatus {
   @Column({ type: "varchar", length: 25, nullable: false })
   name?: string;
 
+  @Column({ type: Date, nullable: true })
+  creationDate?: Date;
+
+  // EXTRAS
+
   @OneToMany((type) => Item, (item) => item.itemStatus)
   items?: Array<Item>;
 }

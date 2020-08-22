@@ -16,6 +16,13 @@ import { Opinion } from "./opinion.entity";
 import { Console } from "./console.entity";
 import { Evaluation } from "./evaluation.entity";
 
+export enum Visibility {
+  all = "all",
+  users = "users",
+  friends = "friends",
+  me = "me",
+}
+
 @Entity("item")
 export class Item {
   @PrimaryGeneratedColumn({ type: "int" })
@@ -51,6 +58,15 @@ export class Item {
 
   @ManyToOne((type) => ItemStatus, (itemStatus) => itemStatus.items)
   itemStatus?: ItemStatus;
+
+  @Column({
+    type: "enum",
+    enum: Visibility,
+    default: Visibility.all,
+  })
+  visibility?: Visibility;
+
+  // EXTRAS
 
   @OneToMany((type) => Loan, (loan) => loan.borrowedItem)
   loans?: Loan[];

@@ -18,6 +18,7 @@ export class Tag {
   @Column({ type: Date, nullable: true })
   creationDate?: Date;
 
+  //EXTRAS
   @ManyToMany((type) => Item, (item) => item.tags)
   items?: Item[];
 }
