@@ -28,7 +28,6 @@ export class ItemService extends AbstractService {
     "console",
     "evaluations",
     "evaluations.user",
-    "tags.items",
   ];
 
   getAll() {
@@ -57,31 +56,37 @@ export class ItemService extends AbstractService {
     });
   }
 
-  getItemsByTitle(param: string) {
-    return this.repository.find({
-      where: { title: param },
+  async getItemsWithVisibilityForAllByKeyword(param: string) {
+    const items: Item[] = await this.repository.find({
+      relations: this.relationEntities,
+      where: { visibility: "all" },
     });
-  }
-
-  // getItemsByTag(tag: string) {
-  //   console.log(tag);
-
-  //   return this.tagRepository.find({
-  //     where: { name: tag },
-  //   });
-  // }
-
-  getItemsByKeyword(param: string) {
-    return this.repository.find({
-      where: { title: param } || { author: param } || { city: param },
-    });
-  }
-
-  getItemsByKeywordWithVisibilityForAll(param: string) {
-    const searchFirst = this.repository.find({
-      where: ({ visibility: 1 } && { title: param }) || { author: param } || {
-          city: param,
-        },
-    });
+    const results: Item[] = [];
+    let num = 0;
+    let done = false;
+    if (items) {
+      items.forEach((item) => {
+        if (
+          item.title.toLowerCase().includes(param) ||
+          item.author?.toLocaleLowerCase().includes(param)
+        ) {
+          results.push(item);
+        }
+        if (item.tags) {
+          item.tags.forEach((tag: Tag) => {
+            if (tag.name.toLocaleLowerCase().includes(param)) {
+              results.push(item);
+            }
+          });
+        }
+        num = num + 1;
+        if (num === items.length) {
+          done = true;
+        }
+      });
+    }
+    if (done) {
+      return results;
+    }
   }
 }

@@ -26,6 +26,11 @@ export const ItemController = (app: Application) => {
     res.send(await itemService.getAll());
   });
 
+  itemRouter.get("/search/:keyword", async (req: Request, res: Response) => {
+    const keyword = req.params.keyword;
+    res.send(await itemService.getItemsWithVisibilityForAllByKeyword(keyword));
+  });
+
   itemRouter.get("/:id", async (req: Request, res: Response) => {
     res.send(await itemService.getById(Number(req.params.id)));
   });
