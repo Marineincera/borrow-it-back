@@ -1,7 +1,8 @@
-import { Application, Request, Response } from 'express';
+import { Application, Request, Response } from "express";
 
-import { commonController } from '../core/abstract.controller';
-import { ItemService } from '../services/item.service';
+import { commonController } from "../core/abstract.controller";
+import { ItemService } from "../services/item.service";
+import { TagService } from "../services/tag.service";
 
 /**
  * Ce controller vous servira de modèle pour construire vos différent controller
@@ -11,23 +12,23 @@ import { ItemService } from '../services/item.service';
  * @param app l'application express
  */
 export const ItemController = (app: Application) => {
+  const itemService = new ItemService();
+  const tagService = new TagService();
 
-    const itemService = new ItemService();
+  const itemRouter = commonController(itemService);
 
-    const itemRouter = commonController(itemService);
+  // Ajoutez les nouvelles routes ici
+  itemRouter.get("/filter/:number", async (req: Request, res: Response) => {
+    res.send(await itemService.getFilterItems(Number(req.params.number)));
+  });
 
-    // Ajoutez les nouvelles routes ici
-    itemRouter.get('/filter/:number', async (req: Request, res: Response) => {
-        res.send(await itemService.getFilterItems(Number(req.params.number)));
-    });
+  itemRouter.get("/", async (req: Request, res: Response) => {
+    res.send(await itemService.getAll());
+  });
 
-    itemRouter.get('/', async (req: Request, res: Response) => {
-        res.send(await itemService.getAll());
-    });
+  itemRouter.get("/:id", async (req: Request, res: Response) => {
+    res.send(await itemService.getById(Number(req.params.id)));
+  });
 
-    itemRouter.get('/:id', async (req: Request, res: Response) => {
-        res.send(await itemService.getById(Number(req.params.id)));
-    });
-
-    app.use('/items', itemRouter);
+  app.use("/items", itemRouter);
 };

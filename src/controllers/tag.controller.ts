@@ -1,4 +1,4 @@
-import { Application } from "express";
+import { Application, Request, Response } from "express";
 
 import { commonController } from "../core/abstract.controller";
 import { TagService } from "../services/tag.service";
@@ -16,6 +16,10 @@ export const TagController = (app: Application) => {
   const tagRouter = commonController(tagService);
 
   // Ajoutez les nouvelles routes ici
+  tagRouter.get("/search/:tag", async (req: Request, res: Response) => {
+    const tag = req.params.tag;
+    res.send(await tagService.getTagsByKeyword(tag));
+  });
 
   app.use("/tags", tagRouter);
 };
