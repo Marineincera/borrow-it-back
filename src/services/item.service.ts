@@ -3,8 +3,11 @@ import { getCustomRepository } from "typeorm";
 import { AbstractService } from "../core/abstract.service";
 import { ItemRepository } from "../repositories/item.repository";
 import { Item } from "../entities/item.entity";
-import { TagRepository } from "../repositories/tag.repository";
+import { FriendshipDemandRepository } from "../repositories/friendship-demand.repository";
 import { Tag } from "../entities/tag.entity";
+import { UserService } from "./user.service";
+import { FriendshipDemandService } from "./friendship-demand.service";
+import { FriendshipDemand } from "src/entities/friendship-demand.entity";
 /**
  * Cette classe est un service
  * C'est ici que l'ensemble de la logique consernant les psort doit apparaitre.
@@ -12,7 +15,9 @@ import { Tag } from "../entities/tag.entity";
  */
 export class ItemService extends AbstractService {
   protected repository = getCustomRepository(ItemRepository);
-  protected tagRepository = getCustomRepository(TagRepository);
+  protected friendshipDemandRepository = getCustomRepository(
+    FriendshipDemandRepository
+  );
 
   constructor() {
     super();
@@ -89,4 +94,9 @@ export class ItemService extends AbstractService {
       return results;
     }
   }
+
+  async getItemsWithVisibilityForAllByUser(
+    param: string,
+    connectedUserId: number
+  ) {}
 }

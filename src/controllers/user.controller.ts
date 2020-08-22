@@ -55,6 +55,10 @@ export const UserController = (app: Application) => {
     res.send(await userService.getById(Number(req.params.id)));
   });
 
+  userRouter.get("/friends/:id", async (req: Request, res: Response) => {
+    res.send(await userService.getFriendsByUser(Number(req.params.id)));
+  });
+
   userRouter.get("/search/me", async (req: Request, res: Response) => {
     const user = await userService.getMe((req as any).user.id);
 
