@@ -6,8 +6,8 @@ import { Item } from "../entities/item.entity";
 import { FriendshipDemandRepository } from "../repositories/friendship-demand.repository";
 import { Tag } from "../entities/tag.entity";
 import { UserService } from "./user.service";
-import { FriendshipDemandService } from "./friendship-demand.service";
-import { FriendshipDemand } from "src/entities/friendship-demand.entity";
+import { User } from "../entities/user.entity";
+import { rejects } from "assert";
 /**
  * Cette classe est un service
  * C'est ici que l'ensemble de la logique consernant les psort doit apparaitre.
@@ -18,9 +18,11 @@ export class ItemService extends AbstractService {
   protected friendshipDemandRepository = getCustomRepository(
     FriendshipDemandRepository
   );
+  private userService: UserService;
 
   constructor() {
     super();
+    this.userService = new UserService();
   }
 
   relationEntities = [
@@ -61,10 +63,10 @@ export class ItemService extends AbstractService {
     });
   }
 
-  async getItemsWithVisibilityForAllByKeyword(param: string) {
+  async getItemsWithVisibilityByKeyword(param: string, visibility: string) {
     const items: Item[] = await this.repository.find({
       relations: this.relationEntities,
-      where: { visibility: "all" },
+      where: { visibility: visibility } && { itemStatus: { id: 1 } },
     });
     const results: Item[] = [];
     let num = 0;
@@ -75,7 +77,17 @@ export class ItemService extends AbstractService {
           item.title.toLowerCase().includes(param) ||
           item.author?.toLocaleLowerCase().includes(param)
         ) {
-          results.push(item);
+          if (!results.find((element) => element.id === item.id)) {
+            results.push(item);
+          }
+        }
+        if (
+          item.category?.name.toLocaleLowerCase().includes(param) ||
+          item.console?.name.toLocaleLowerCase().includes(param)
+        ) {
+          if (!results.find((element) => element.id === item.id)) {
+            results.push(item);
+          }
         }
         if (item.tags) {
           item.tags.forEach((tag: Tag) => {
@@ -95,8 +107,10 @@ export class ItemService extends AbstractService {
     }
   }
 
-  async getItemsWithVisibilityForAllByUser(
-    param: string,
-    connectedUserId: number
-  ) {}
+  async getItemsByOwner(id: number) {
+    return await this.repository.find({
+      relations: this.relationEntities,
+      where: { user: { id: id } } && { visibility: "friends" },
+    });
+  }
 }

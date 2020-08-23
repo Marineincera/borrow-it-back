@@ -5,6 +5,8 @@ import { UserRepository } from "../repositories/user.repository";
 
 import { User } from "../entities/user.entity";
 import { FriendshipDemand } from "src/entities/friendship-demand.entity";
+import { Item } from "src/entities/item.entity";
+import { ItemService } from "./item.service";
 
 /**
  * Cette classe est un service
@@ -17,6 +19,8 @@ export class UserService extends AbstractService {
   constructor() {
     super();
   }
+
+  friends: User[] = [];
 
   relationEntities = [
     "items",
@@ -100,14 +104,12 @@ export class UserService extends AbstractService {
 
   async getFriendsByUser(id: number) {
     const connectedUser = await this.repository.findOne(id, {
-      where: { id },
       relations: this.relationEntities,
+      where: { id },
     });
     let friends: User[] = [];
     let step = 0;
     if (connectedUser) {
-      console.log(connectedUser);
-
       if (connectedUser?.friendDemandsSend) {
         let num = 0;
         connectedUser?.friendDemandsSend.forEach((friendDemandSend) => {
@@ -141,6 +143,7 @@ export class UserService extends AbstractService {
       }
     }
     if (step === 2) {
+      this.friends = friends;
       return friends;
     }
   }
