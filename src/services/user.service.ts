@@ -147,4 +147,11 @@ export class UserService extends AbstractService {
       return friends;
     }
   }
+
+  getUsersByKeyword(keyword: string) {
+    return this.repository.find({
+      relations: this.relationEntities,
+      where: [{ pseudo: keyword }, { city: keyword }],
+    });
+  }
 }

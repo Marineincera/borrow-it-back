@@ -75,6 +75,11 @@ export const UserController = (app: Application) => {
     res.send(await userService.modifyAUser(id, user));
   });
 
+  userRouter.get("/search/keyword/:keyword", async (req: Request, res: Response) => {
+    const keyword = req.params.keyword;
+    res.send(await userService.getUsersByKeyword(keyword));
+  });
+
   // Upload avatar
 
   userRouter.post(
