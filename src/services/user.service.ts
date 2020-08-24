@@ -4,6 +4,9 @@ import { AbstractService } from "../core/abstract.service";
 import { UserRepository } from "../repositories/user.repository";
 
 import { User } from "../entities/user.entity";
+import { FriendshipDemand } from "src/entities/friendship-demand.entity";
+import { Item } from "src/entities/item.entity";
+import { ItemService } from "./item.service";
 
 /**
  * Cette classe est un service
@@ -16,6 +19,8 @@ export class UserService extends AbstractService {
   constructor() {
     super();
   }
+
+  friends: User[] = [];
 
   relationEntities = [
     "items",
@@ -95,5 +100,58 @@ export class UserService extends AbstractService {
 
     user.avatar = "uploads/" + avatar;
     return this.repository.save(user);
+  }
+
+  async getFriendsByUser(id: number) {
+    const connectedUser = await this.repository.findOne(id, {
+      relations: this.relationEntities,
+      where: { id },
+    });
+    let friends: User[] = [];
+    let step = 0;
+    if (connectedUser) {
+      if (connectedUser?.friendDemandsSend) {
+        let num = 0;
+        connectedUser?.friendDemandsSend.forEach((friendDemandSend) => {
+          if (friendDemandSend.status?.id === 2) {
+            friends.push(friendDemandSend.userAskedForFriend);
+          }
+          num = num + 1;
+
+          if (num === connectedUser.friendDemandsSend?.length) {
+            step = 1;
+          }
+        });
+        if (connectedUser.friendDemandsSend?.length === 0) {
+          step = 2;
+        }
+      }
+      if (connectedUser?.friendDemandsReceived) {
+        let num = 0;
+        connectedUser?.friendDemandsReceived.forEach((friendDemandReceived) => {
+          if (friendDemandReceived.status?.id === 2) {
+            friends.push(friendDemandReceived.asker);
+          }
+          num = num + 1;
+          if (num === connectedUser.friendDemandsReceived?.length) {
+            step = 2;
+          }
+        });
+        if (connectedUser.friendDemandsReceived?.length === 0) {
+          step = 2;
+        }
+      }
+    }
+    if (step === 2) {
+      this.friends = friends;
+      return friends;
+    }
+  }
+
+  getUsersByKeyword(keyword: string) {
+    return this.repository.find({
+      relations: this.relationEntities,
+      where: [{ pseudo: keyword }, { city: keyword }],
+    });
   }
 }

@@ -35,6 +35,7 @@ export class Evaluation {
 
   @Column({
     type: "varchar",
+    nullable: true,
   })
   opinion?: string;
 }

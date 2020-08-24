@@ -55,6 +55,10 @@ export const UserController = (app: Application) => {
     res.send(await userService.getById(Number(req.params.id)));
   });
 
+  userRouter.get("/friends/:id", async (req: Request, res: Response) => {
+    res.send(await userService.getFriendsByUser(Number(req.params.id)));
+  });
+
   userRouter.get("/search/me", async (req: Request, res: Response) => {
     const user = await userService.getMe((req as any).user.id);
 
@@ -69,6 +73,11 @@ export const UserController = (app: Application) => {
     const id = parseInt(req.params.id, 10);
     const user = req.body;
     res.send(await userService.modifyAUser(id, user));
+  });
+
+  userRouter.get("/search/keyword/:keyword", async (req: Request, res: Response) => {
+    const keyword = req.params.keyword;
+    res.send(await userService.getUsersByKeyword(keyword));
   });
 
   // Upload avatar
