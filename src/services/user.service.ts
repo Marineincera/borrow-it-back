@@ -7,6 +7,7 @@ import { User } from "../entities/user.entity";
 import { FriendshipDemand } from "src/entities/friendship-demand.entity";
 import { Item } from "src/entities/item.entity";
 import { ItemService } from "./item.service";
+import { type } from "os";
 
 /**
  * Cette classe est un service
