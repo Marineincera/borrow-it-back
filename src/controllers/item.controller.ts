@@ -32,9 +32,13 @@ export const ItemController = (app: Application) => {
     "/search/all/:keyword",
     async (req: Request, res: Response) => {
       const keyword = req.params.keyword;
-      res.send(
-        await itemService.getItemsWithVisibilityByKeyword(keyword, "all")
-      );
+      try {
+        res.send(
+          await itemService.getItemsWithVisibilityByKeyword(keyword, "all")
+        );
+      } catch (error) {
+        res.status(409).send("La requête n'a pas aboutie");
+      }
     }
   );
 
@@ -42,9 +46,13 @@ export const ItemController = (app: Application) => {
     "/search/friends/:keyword",
     async (req: Request, res: Response) => {
       const keyword = req.params.keyword;
-      res.send(
-        await itemService.getItemsWithVisibilityByKeyword(keyword, "friends")
-      );
+      try {
+        res.send(
+          await itemService.getItemsWithVisibilityByKeyword(keyword, "friends")
+        );
+      } catch (error) {
+        res.status(409).send("La requête n'a pas aboutie");
+      }
     }
   );
 

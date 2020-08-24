@@ -75,10 +75,17 @@ export const UserController = (app: Application) => {
     res.send(await userService.modifyAUser(id, user));
   });
 
-  userRouter.get("/search/keyword/:keyword", async (req: Request, res: Response) => {
-    const keyword = req.params.keyword;
-    res.send(await userService.getUsersByKeyword(keyword));
-  });
+  userRouter.get(
+    "/search/keyword/:keyword",
+    async (req: Request, res: Response) => {
+      const keyword = req.params.keyword;
+      try {
+        res.send(await userService.getUsersByKeyword(keyword));
+      } catch (error) {
+        res.status(409).send("La requête n'a pas aboutie");
+      }
+    }
+  );
 
   // Upload avatar
 
