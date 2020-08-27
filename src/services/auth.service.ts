@@ -155,4 +155,26 @@ export class AuthService {
     console.log("Preview URL: %s", getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
+
+  async updatePasswordOrEmail(userWithUpdate: User, key: string, id: number) {
+    //attention recevoir EMAIL et PASSWORD dans userWithUpdate !!!
+
+    if (userWithUpdate.email && userWithUpdate.password) {
+      const userOld = await this.repository.findOne(id, {
+        select: ["email", "password"],
+      });
+      if (userOld && key === "password") {
+        const toHash = `${userWithUpdate.password},${userOld.email}`;
+        userWithUpdate.password = await hash(toHash); //argon2
+        return await this.repository.update(id, userWithUpdate); // user modification
+      }
+      if (userOld && key === "email") {
+        const toHash = `${userWithUpdate.password},${userWithUpdate.email}`;
+        userWithUpdate.password = await hash(toHash); //argon2
+        return await this.repository.update(id, userWithUpdate); // user modification
+      }
+    } else {
+      throw new Error("email or password missing");
+    }
+  }
 }
