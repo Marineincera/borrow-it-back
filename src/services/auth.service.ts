@@ -157,7 +157,7 @@ export class AuthService {
   }
 
   async updatePasswordOrEmail(userWithUpdate: User, key: string, id: number) {
-    //attention recevoir EMAIL et PASSWORD dans userWithUpdate !!!
+    //userWithUpdate needs to contain EMAIL & PASSWORD
 
     if (userWithUpdate.email && userWithUpdate.password) {
       const userOld = await this.repository.findOne(id, {
