@@ -42,7 +42,11 @@ export const AuthController = (app: Application) => {
         city: user.city,
       });
     } catch (error) {
-      res.status(409).send(error);
+      if (error.message === "account not activated") {
+        res.send({ Erreur: "Compte pas activé" });
+      } else {
+        res.status(409).send("Erreur lors de l'inscription");
+      }
     }
   });
 

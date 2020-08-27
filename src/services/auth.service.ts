@@ -37,53 +37,56 @@ export class AuthService {
     }
   }
 
-  //crypte le passworde
-
   async signup(user: User) {
     if (await this.getUserSensitives(user.email)) {
-      throw new Error("ALREADY_EXIST");
+      throw new Error("this email is already used");
     }
 
-    user.password = await hash(user.password); //argon2
-    console.log(user.password);
-
+    //password(salt + hash)
+    const toHash = `${user.password},${user.email}`;
+    user.password = await hash(toHash); //argon2
     const tokenString = randomBytes(12).toString("hex");
-    user = this.repository.create(user); // initialise l objet user
-    user = await this.repository.save(user); // sauvegarder le user
-    console.log(user);
-
-    await this.nodemailer(tokenString, user); // envoi de mail
+    user = this.repository.create(user); // User object initialized
+    user = await this.repository.save(user); // user saved
+    await this.nodemailer(tokenString, user); // mail send
 
     const token = new Token();
     token.user = user;
     token.value = tokenString;
-
     this.tokenService.create(token);
-    console.log(token);
-    console.log(token.value);
-
     return true;
   }
 
   async signIn(email: string, password: string) {
+    let verified = false;
     const labelError = new Error("Credentials are not valid");
-
     const user = await this.repository.findOne({
       where: { email },
-      select: ["id", "password", "email", "pseudo", "city", "avatar"],
+      select: [
+        "id",
+        "password",
+        "email",
+        "pseudo",
+        "city",
+        "avatar",
+        "activated",
+      ],
     });
-    console.log(user);
-
     if (!user) {
       throw labelError;
     }
-    const isValid = await verify(user.password, password);
+
+    if (user.activated === false) {
+      throw new Error("account not activated");
+    }
+
+    //get password + salt and verification if matching
+    const toVerify = `${password},${user.email}`;
+    const isValid = await verify(user.password, toVerify);
     if (!isValid) {
       throw labelError;
-
-      console.log("notValid");
     } else {
-      console.log("isValid");
+      verified = true;
     }
 
     const secret1 = process.env.BORROW_JWT_SECRET;
@@ -91,9 +94,11 @@ export class AuthService {
       throw new Error("Pas de secret SETUP");
     }
 
+    //token creation
     const token = await sign(
       { id: user.id, pseudo: user.pseudo, email: user.email },
-      secret1
+      secret1,
+      { expiresIn: 60 * 60 }
     );
     delete user.password;
     return { token, user };
