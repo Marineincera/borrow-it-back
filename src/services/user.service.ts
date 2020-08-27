@@ -69,6 +69,10 @@ export class UserService extends AbstractService {
     });
   }
 
+  delete(id: any) {
+    return this.repository.delete(id);
+  }
+
   async activUserAccount(user: User) {
     user.activated = true;
     return await this.repository.update(user.id, user);
