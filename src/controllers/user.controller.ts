@@ -55,8 +55,8 @@ export const UserController = (app: Application) => {
     res.send(await userService.getById(Number(req.params.id)));
   });
 
-  userRouter.get("/friends/:id", async (req: Request, res: Response) => {
-    res.send(await userService.getFriendsByUser(Number(req.params.id)));
+  userRouter.get("/friends/", async (req: Request, res: Response) => {
+    res.send(await userService.getFriendsByUser((req as any).user.id));
   });
 
   userRouter.get("/search/me", async (req: Request, res: Response) => {
@@ -69,10 +69,15 @@ export const UserController = (app: Application) => {
     }
   });
 
-  userRouter.put("/modify/:id", async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
+  userRouter.put("/modify/", async (req: Request, res: Response) => {
+    const id = parseInt((req as any).user.id);
     const user = req.body;
     res.send(await userService.modifyAUser(id, user));
+  });
+
+  userRouter.delete("/delete/:", async (req: Request, res: Response) => {
+    await userService.delete(parseInt((req as any).user.id));
+    res.sendStatus(204);
   });
 
   userRouter.get(
