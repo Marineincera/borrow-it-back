@@ -43,7 +43,7 @@ export const UserController = (app: Application) => {
   const secret1 = process.env.BORROW_JWT_SECRET;
 
   if (!secret1) {
-    throw new Error("Pas de secret SETUP");
+    throw new Error("secret is missing");
   }
   userRouter.use(jwt({ secret: secret1, algorithms: ["HS256"] })); // secret = variable d'environnement
 
@@ -56,12 +56,18 @@ export const UserController = (app: Application) => {
   });
 
   userRouter.get("/friends/", async (req: Request, res: Response) => {
-    res.send(await userService.getFriendsByUser((req as any).user.id));
+    const friends = await userService.getFriendsByUser(
+      parseInt((req as any).user.id, 10)
+    );
+    if (!friends) {
+      res.status(400).send("Aucun utilisateur trouvé pour ce token");
+    } else {
+      res.send(friends);
+    }
   });
 
   userRouter.get("/search/me", async (req: Request, res: Response) => {
     const user = await userService.getMe((req as any).user.id);
-
     if (!user) {
       res.status(400).send("Aucun utilisateur trouvé pour ce token");
     } else {
@@ -70,14 +76,25 @@ export const UserController = (app: Application) => {
   });
 
   userRouter.put("/modify/", async (req: Request, res: Response) => {
-    const id = parseInt((req as any).user.id);
+    const id = parseInt((req as any).user.id, 10);
     const user = req.body;
-    res.send(await userService.modifyAUser(id, user));
+    const userUpdated = await userService.modifyAUser(id, user);
+    if (!id) {
+      res.status(400).send("Aucun utilisateur trouvé pour ce token");
+    } else {
+      res.send(userUpdated);
+    }
   });
 
   userRouter.delete("/delete/:", async (req: Request, res: Response) => {
-    await userService.delete(parseInt((req as any).user.id));
-    res.sendStatus(204);
+    const userToDelete = await userService.delete(
+      parseInt((req as any).user.id, 10)
+    );
+    if (!userToDelete) {
+      res.status(400).send("Aucun utilisateur trouvé pour ce token");
+    } else {
+      res.status(204).send("L'utilisateur a bien été supprimé");
+    }
   });
 
   userRouter.get(
@@ -95,12 +112,16 @@ export const UserController = (app: Application) => {
   // Upload avatar
 
   userRouter.post(
-    "/avatar/:id",
+    "/avatar/:",
     upload.single("avatar"),
     async (req: Request, res: Response) => {
       const document = req.body;
-      const userId = parseInt(req.params.id, 10);
-      res.send(await userService.addAvatar(userId, req.file.filename));
+      const userId = parseInt((req as any).user.id, 10);
+      if (!userId) {
+        res.status(400).send("Aucun utilisateur trouvé pour ce token");
+      } else {
+        res.send(await userService.addAvatar(userId, req.file.filename));
+      }
     }
   );
 
