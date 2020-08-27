@@ -76,19 +76,27 @@ export class AuthService {
       throw labelError;
     }
 
-    if (user.activated === false) {
-      throw new Error("account not activated");
+    if (user.id < 42) {
+      const isValid = await verify(user.password, password);
+      if (!isValid) {
+        throw labelError;
+      } else {
+        verified = true;
+      }
     }
-
-    //get password + salt and verification if matching
-    const toVerify = `${password},${user.email}`;
-    const isValid = await verify(user.password, toVerify);
-    if (!isValid) {
-      throw labelError;
-    } else {
-      verified = true;
+    if (user.id > 41) {
+      if (user.activated === false) {
+        throw new Error("account not activated");
+      }
+      //get password + salt and verification if matching
+      const toVerify = `${password},${user.email}`;
+      const isValid = await verify(user.password, toVerify);
+      if (!isValid) {
+        throw labelError;
+      } else {
+        verified = true;
+      }
     }
-
     const secret1 = process.env.BORROW_JWT_SECRET;
     if (!secret1) {
       throw new Error("Pas de secret SETUP");
