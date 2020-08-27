@@ -64,5 +64,12 @@ export const AuthController = (app: Application) => {
     }
   );
 
+  AuthRouter.put("/update/:id/:key", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    const key = req.params.key;
+    const userWithUpdate = req.body;
+    res.send(await authService.updatePasswordOrEmail(userWithUpdate, key, id));
+  });
+
   app.use("/auth", AuthRouter);
 };

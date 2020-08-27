@@ -76,19 +76,27 @@ export class AuthService {
       throw labelError;
     }
 
-    if (user.activated === false) {
-      throw new Error("account not activated");
+    if (user.id < 42) {
+      const isValid = await verify(user.password, password);
+      if (!isValid) {
+        throw labelError;
+      } else {
+        verified = true;
+      }
     }
-
-    //get password + salt and verification if matching
-    const toVerify = `${password},${user.email}`;
-    const isValid = await verify(user.password, toVerify);
-    if (!isValid) {
-      throw labelError;
-    } else {
-      verified = true;
+    if (user.id > 41) {
+      if (user.activated === false) {
+        throw new Error("account not activated");
+      }
+      //get password + salt and verification if matching
+      const toVerify = `${password},${user.email}`;
+      const isValid = await verify(user.password, toVerify);
+      if (!isValid) {
+        throw labelError;
+      } else {
+        verified = true;
+      }
     }
-
     const secret1 = process.env.BORROW_JWT_SECRET;
     if (!secret1) {
       throw new Error("Pas de secret SETUP");
@@ -146,5 +154,27 @@ export class AuthService {
     // Preview only available when sending through an Ethereal account
     console.log("Preview URL: %s", getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  }
+
+  async updatePasswordOrEmail(userWithUpdate: User, key: string, id: number) {
+    //userWithUpdate needs to contain EMAIL & PASSWORD
+
+    if (userWithUpdate.email && userWithUpdate.password) {
+      const userOld = await this.repository.findOne(id, {
+        select: ["email", "password"],
+      });
+      if (userOld && key === "password") {
+        const toHash = `${userWithUpdate.password},${userOld.email}`;
+        userWithUpdate.password = await hash(toHash); //argon2
+        return await this.repository.update(id, userWithUpdate); // user modification
+      }
+      if (userOld && key === "email") {
+        const toHash = `${userWithUpdate.password},${userWithUpdate.email}`;
+        userWithUpdate.password = await hash(toHash); //argon2
+        return await this.repository.update(id, userWithUpdate); // user modification
+      }
+    } else {
+      throw new Error("email or password missing");
+    }
   }
 }
