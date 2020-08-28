@@ -104,7 +104,7 @@ export const UserController = (app: Application) => {
       try {
         res.send(await userService.getUsersByKeyword(keyword));
       } catch (error) {
-        res.status(409).send("La requête n'a pas aboutie");
+        res.status(409).send("La requête n'a pas abouti");
       }
     }
   );
