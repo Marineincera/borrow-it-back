@@ -37,7 +37,7 @@ export const ItemController = (app: Application) => {
           await itemService.getItemsWithVisibilityByKeyword(keyword, "all")
         );
       } catch (error) {
-        res.status(409).send("La requête n'a pas aboutie");
+        res.status(409).send("La requête n'a pas abouti");
       }
     }
   );
@@ -51,7 +51,7 @@ export const ItemController = (app: Application) => {
           await itemService.getItemsWithVisibilityByKeyword(keyword, "friends")
         );
       } catch (error) {
-        res.status(409).send("La requête n'a pas aboutie");
+        res.status(409).send("La requête n'a pas abouti");
       }
     }
   );
