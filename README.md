@@ -1,4 +1,4 @@
-## BORROWIT 
+# BORROWIT 
 
 ### Application pour faciliter les prêts d'objets créée pour le passage du titre de développeur web.
 ### Exemples de fonctionnalités développées :
@@ -10,7 +10,7 @@
 - Rechercher un ami par mot clé (nom d'utilisateur, ville).
 - Rechercher un objet par mot clé (titre, propriétaire, catégorie).
 
-# Personal project - BorrowIt - API - July 2020
+### Personal project - BorrowIt - API - July 2020
 This project was created for the Wild Code School final exam. 
 This project was created with NodeJs. 
 
